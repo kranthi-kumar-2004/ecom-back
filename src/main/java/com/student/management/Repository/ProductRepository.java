@@ -6,7 +6,11 @@ import com.student.management.enitity.Products;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Products, Long> {
-    List<Products> findByName(String name);
+     List<Products> findByName(String name);
     List<Products> findByNameContainingIgnoreCase(String name);
-    List<Products> findByCategoryContainingIgnoreCase(String category);
+    List<Products> findByCategoryIgnoreCase(String category);
+     List<Products> findByNameContainingIgnoreCaseOrCategoryContainingIgnoreCase(
+        String name,
+        String category
+    );
 }
