@@ -26,7 +26,14 @@ public class ProductController {
         return repo.findById(id).orElse(new Products());
     }
 
+  @GetMapping("/products/search-all")
+public List<Products> searchAll(
+        @RequestParam String q,
+        @RequestParam String category) {
 
+    return repo
+        .findByNameContainingIgnoreCaseOrCategoryContainingIgnoreCase(q, category);
+}
     @Autowired
 private ProductService service;
   @PostMapping("/products/")
@@ -45,6 +52,10 @@ public List<Products> search(@RequestParam String name) {
   @DeleteMapping("/products/{id}")
 public void delete(@PathVariable Long id) {
     service.delete(id);
+}
+    @GetMapping("/products/category")
+public List<Products> getByCategory(@RequestParam String name) {
+    return repo.findByCategoryIgnoreCase(name);
 }
     }
 
