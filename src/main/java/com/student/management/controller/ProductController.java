@@ -6,11 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import com.student.management.Repository.ProductRepository;
 import com.student.management.enitity.Products;
 import com.student.management.services.ProductService;
-
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import java.util.List;
 
 @RestController
-
+@EnableScheduling
 public class ProductController {
     @Autowired
     public ProductRepository repo;
@@ -20,7 +21,11 @@ public class ProductController {
         return repo.findAll();
 
     }
-
+    @Scheduled(fixedRate = 60000)
+    public void keepDatabaseActive() {
+        repo.findAll();
+        System.out.println("Database checked");
+    }
     @GetMapping("/products/{id}")
     public Products getProducts(@PathVariable Long id){
         return repo.findById(id).orElse(new Products());
