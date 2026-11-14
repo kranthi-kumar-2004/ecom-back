@@ -6,6 +6,8 @@ import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 public class CorsConfig {
+    @Value("${app.cors-origins}")
+     private String[] cors;
     
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -14,7 +16,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOriginPatterns("https://ecomerce-front-fvu6.vercel.app") 
+                        .allowedOriginPatterns(cors) 
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .exposedHeaders("Authorization") 
